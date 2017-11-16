@@ -11,18 +11,14 @@ public class Torchelight : MonoBehaviour {
 	public float MaxLightIntensity;
 	public float IntensityLight;
 	
-	//TODO fix emissionRate	
+	
 	void Start () {
 		TorchLight.GetComponent<Light>().intensity=IntensityLight;
 
 		MainFlame.GetComponent<ParticleSystem>().SetEmissionRate(IntensityLight * 20f);
-		//MainFlame.GetComponent<ParticleSystem>().emissionRate=IntensityLight*20f;
 		BaseFlame.GetComponent<ParticleSystem>().SetEmissionRate(IntensityLight * 15f);
-		//BaseFlame.GetComponent<ParticleSystem>().emissionRate=IntensityLight*15f;	
 		Etincelles.GetComponent<ParticleSystem>().SetEmissionRate(IntensityLight * 7f);
-		//Etincelles.GetComponent<ParticleSystem>().emissionRate=IntensityLight*7f;
 		Fumee.GetComponent<ParticleSystem>().SetEmissionRate(IntensityLight * 7f);
-		//Fumee.GetComponent<ParticleSystem>().emissionRate=IntensityLight*12f;
 	}
 	
 
@@ -34,13 +30,10 @@ public class Torchelight : MonoBehaviour {
 
 		TorchLight.GetComponent<Light>().color=new Color(Mathf.Min(IntensityLight/1.5f,1f),Mathf.Min(IntensityLight/2f,1f),0f);
 		MainFlame.GetComponent<ParticleSystem>().SetEmissionRate(IntensityLight * 20f);
-		//MainFlame.GetComponent<ParticleSystem>().emissionRate=IntensityLight*20f;
 		BaseFlame.GetComponent<ParticleSystem>().SetEmissionRate(IntensityLight * 15f);
-		//BaseFlame.GetComponent<ParticleSystem>().emissionRate=IntensityLight*15f;
 		Etincelles.GetComponent<ParticleSystem>().SetEmissionRate(IntensityLight * 7f);
-		//Etincelles.GetComponent<ParticleSystem>().emissionRate=IntensityLight*7f;
 		Fumee.GetComponent<ParticleSystem>().SetEmissionRate(IntensityLight * 7f);
-		//Fumee.GetComponent<ParticleSystem>().emissionRate=IntensityLight*12f;		
+	
 
 	}
 }

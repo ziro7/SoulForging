@@ -5,7 +5,7 @@ using UnityStandardAssets.Characters.ThirdPerson;
 [RequireComponent(typeof (ThirdPersonCharacter))]
 public class PlayerMovement : MonoBehaviour
 {
-    ThirdPersonCharacter m_Character;   // A reference to the ThirdPersonCharacter on the object
+    ThirdPersonCharacter thirdPersonCharacter;   
     CameraRaycaster cameraRayCaster;
     Vector3 currentClickTarget;
 	[SerializeField] float walkMoveStopRadius = 0.2f;
@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
 	private void Start()
     {
 		cameraRayCaster = FindObjectOfType<CameraRaycaster>();
-		m_Character = GetComponent<ThirdPersonCharacter>();
+		thirdPersonCharacter = GetComponent<ThirdPersonCharacter>();
         currentClickTarget = transform.position;
     }
 
@@ -23,8 +23,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
 
-			print("Cursor raycast hit " + cameraRayCaster.layerHit);
-			switch(cameraRayCaster.layerHit)
+			print("Cursor raycast hit " + cameraRayCaster.currentLayerHit);
+			switch(cameraRayCaster.currentLayerHit)
 			{
 				case Layer.Walkable:
 					currentClickTarget = cameraRayCaster.hit.point;
@@ -43,12 +43,12 @@ public class PlayerMovement : MonoBehaviour
 		var playerToClickPoint = currentClickTarget - transform.position;
 		if (playerToClickPoint.magnitude >= walkMoveStopRadius)
 		{
-			m_Character.Move(playerToClickPoint, false, false);
+			thirdPersonCharacter.Move(playerToClickPoint, false, false);
 			//print(playerToClickPoint);
 		}
 		else
 		{
-			m_Character.Move(Vector3.zero, false, false);
+			thirdPersonCharacter.Move(Vector3.zero, false, false);
 		}
 		
 
