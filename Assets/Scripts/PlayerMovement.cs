@@ -7,40 +7,49 @@ public class PlayerMovement : MonoBehaviour
 {
     ThirdPersonCharacter thirdPersonCharacter;   
     CameraRaycaster cameraRayCaster;
-    Vector3 currentClickTarget;
+    Vector3 currentDestination;
+	Vector3 clickPoint;
+
 	[SerializeField] float walkMoveStopRadius = 0.2f;
+	[SerializeField] float attackMoveStopRadius = 5f;
 
 	private void Start()
     {
 		cameraRayCaster = FindObjectOfType<CameraRaycaster>();
 		thirdPersonCharacter = GetComponent<ThirdPersonCharacter>();
-        currentClickTarget = transform.position;
+        currentDestination = transform.position;
     }
 
-    // Fixed update is called in sync with physics
-    private void FixedUpdate()
-    {
-        if (Input.GetMouseButton(0))
-        {
+	// Fixed update is called in sync with physics
+	private void FixedUpdate()
+	{
+		if (Input.GetMouseButton(0))
+		{
 
 			print("Cursor raycast hit " + cameraRayCaster.currentLayerHit);
-			switch(cameraRayCaster.currentLayerHit)
+
+			clickPoint = cameraRayCaster.hit.point;
+			switch (cameraRayCaster.currentLayerHit)
 			{
 				case Layer.Walkable:
-					currentClickTarget = cameraRayCaster.hit.point;
+					currentDestination = ShortDestination(clickPoint, walkMoveStopRadius);
 					break;
 
 				case Layer.Enemy:
-					print("Not moving to enemy");
+					currentDestination = ShortDestination(clickPoint, attackMoveStopRadius);
 					break;
 
 				default:
-					print("Shouldn't be here");
+					print("unkown layer");
 					return;
 			}
-			//print(currentClickTarget);				
 		}
-		var playerToClickPoint = currentClickTarget - transform.position;
+
+		WalkToDestination();
+	}
+	private void WalkToDestination()
+	{
+		var playerToClickPoint = currentDestination - transform.position;
 		if (playerToClickPoint.magnitude >= walkMoveStopRadius)
 		{
 			thirdPersonCharacter.Move(playerToClickPoint, false, false);
@@ -50,8 +59,28 @@ public class PlayerMovement : MonoBehaviour
 		{
 			thirdPersonCharacter.Move(Vector3.zero, false, false);
 		}
+	}
 		
+	Vector3 ShortDestination(Vector3 destination, float shortening)
+	{
+		Vector3 reductionVector = (currentDestination - transform.position).normalized * shortening;
+		return currentDestination - reductionVector;
+	}
+
+	void OnDrawGizmos()
+	{
+		//Draw movement gizmos
+		Gizmos.color = Color.black;
+		Gizmos.DrawLine(transform.position, currentDestination);
+		Gizmos.DrawSphere(currentDestination, 0.15f);
+		Gizmos.DrawSphere(clickPoint, 0.10f);
+
+		//Draw attack sphere
+		Gizmos.color = new Color(255f, 0f, 0f, 0.5f);
+		Gizmos.DrawWireSphere(transform.position, attackMoveStopRadius);
+
 
 	}
+
 }
 
