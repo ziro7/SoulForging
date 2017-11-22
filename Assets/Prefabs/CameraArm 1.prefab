@@ -23,6 +23,8 @@ GameObject:
   - component: {fileID: 124068517065038264}
   - component: {fileID: 81205520904010172}
   - component: {fileID: 114036188936485552}
+  - component: {fileID: 114440790170736276}
+  - component: {fileID: 114650467229146106}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -38,6 +40,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4271055152264756}
+  - component: {fileID: 114510432208303416}
   m_Layer: 0
   m_Name: CameraArm 1
   m_TagString: Untagged
@@ -51,7 +54,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1968802772059138}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -132,6 +135,47 @@ MonoBehaviour:
   zoomSpeed: 2
   zoomMin: -2
   zoomMax: -12
+--- !u!114 &114440790170736276
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1004256295622678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42385405d5665f14788eb64a4cc4a6bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoveredObject: {fileID: 0}
+  selectedObject: {fileID: 0}
+--- !u!114 &114510432208303416
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1968802772059138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15ed7b9ef8bd17940b08b43655199f85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layerPriorities: 0900000008000000
+  distanceToBackground: 100
+--- !u!114 &114650467229146106
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1004256295622678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d522bc03d27dbf43a99fb48a2225589, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkCursor: {fileID: 2800000, guid: 57cdbebea568f5c4798dbf3dacb29351, type: 3}
+  attackCursor: {fileID: 2800000, guid: cb54ffc22aa04654cb470a5acb18fefe, type: 3}
+  unknownCursor: {fileID: 2800000, guid: 700af1f053b05e0428c78d4c667c937d, type: 3}
+  cursorHotspot: {x: 0, y: 0}
 --- !u!124 &124068517065038264
 Behaviour:
   m_ObjectHideFlags: 1

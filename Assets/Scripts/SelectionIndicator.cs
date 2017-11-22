@@ -17,6 +17,7 @@ public class SelectionIndicator : MonoBehaviour {
 
 		if (mouseManager.selectedObject != null)
 		{
+			//TODO problem med terrain...hvordan løser jeg den?
 			//tager kun første renderers størrelse - så kan være et problem med flerer renderer.
 			Bounds bigBounds = mouseManager.selectedObject.GetComponentInChildren<Renderer>().bounds;
 
