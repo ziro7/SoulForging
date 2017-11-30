@@ -20,33 +20,7 @@ public class PlayerMovement : MonoBehaviour
         currentDestination = transform.position;
     }
 
-	// Fixed update is called in sync with physics
-	private void FixedUpdate()
-	{
-		if (Input.GetMouseButton(0))
-		{
-
-			print("Cursor raycast hit " + cameraRayCaster.currentLayerHit);
-
-			clickPoint = cameraRayCaster.hit.point;
-			switch (cameraRayCaster.currentLayerHit)
-			{
-				case Layer.Walkable:
-					currentDestination = ShortDestination(clickPoint, walkMoveStopRadius);
-					break;
-
-				case Layer.Enemy:
-					currentDestination = ShortDestination(clickPoint, attackMoveStopRadius);
-					break;
-
-				default:
-					print("unkown layer");
-					return;
-			}
-		}
-
-		WalkToDestination();
-	}
+	
 	private void WalkToDestination()
 	{
 		var playerToClickPoint = currentDestination - transform.position;

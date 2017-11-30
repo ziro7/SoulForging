@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 81205520904010172}
   - component: {fileID: 114036188936485552}
   - component: {fileID: 114440790170736276}
+  - component: {fileID: 114173499803133518}
   - component: {fileID: 114650467229146106}
   m_Layer: 0
   m_Name: Main Camera
@@ -135,6 +136,18 @@ MonoBehaviour:
   zoomSpeed: 2
   zoomMin: -2
   zoomMax: -12
+--- !u!114 &114173499803133518
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1004256295622678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d02853f5d34bd8f429969ac34c466d07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layerPriorities: 0900000008000000
 --- !u!114 &114440790170736276
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -161,6 +174,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layerPriorities: 0900000008000000
   distanceToBackground: 100
+  viewCamera: {fileID: 0}
+  layerHit: 0
 --- !u!114 &114650467229146106
 MonoBehaviour:
   m_ObjectHideFlags: 1

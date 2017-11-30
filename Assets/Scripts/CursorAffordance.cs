@@ -10,12 +10,15 @@ public class CursorAffordance : MonoBehaviour {
 	[SerializeField] Texture2D attackCursor = null;
 	[SerializeField] Texture2D unknownCursor = null;
 	[SerializeField] Vector2 cursorHotspot = new Vector2(0, 0);
+	[SerializeField] const int walkableLayerNumber = 8;
+	[SerializeField] const int enemyLayerNumber = 9;
+
 	CameraRaycaster cameraRayCaster;
 		
 	// Use this for initialization
 	void Start () {
 		cameraRayCaster = FindObjectOfType<CameraRaycaster>();
-		cameraRayCaster.layerChangeObservers += layerWasChanged; //register for changes on layer changes from raycasts.
+		cameraRayCaster.notifyLayerChangeObservers += OnLayerChanged; //register for changes on layer changes from raycasts.
 	}
 
 	void Update()
@@ -23,23 +26,19 @@ public class CursorAffordance : MonoBehaviour {
 
 	}
 	
-	void layerWasChanged(Layer newLayer)
+	void OnLayerChanged(int newLayer)
 	{
 		switch (newLayer)
 		{
-			case Layer.Walkable:
+			case walkableLayerNumber:
 				Cursor.SetCursor(walkCursor, cursorHotspot, CursorMode.Auto);
 				break;
-			case Layer.Enemy:
+			case enemyLayerNumber:
 				Cursor.SetCursor(attackCursor, cursorHotspot, CursorMode.Auto);
 				break;
-			case Layer.RaycastEndStop:
+			default:
 				Cursor.SetCursor(unknownCursor, cursorHotspot, CursorMode.Auto);
 				break;
-			default:
-				Cursor.SetCursor(walkCursor, cursorHotspot, CursorMode.Auto);
-				break;
-
 		}
 	}
 }
