@@ -9,15 +9,19 @@ public class Enemy : MonoBehaviour, IDamageable {
 	[SerializeField] float attackRadius = 3f;
 	[SerializeField] float chaseRadius = 5f;
 	[SerializeField] float damagePerShot = 9f;
+	[SerializeField] float secondsBetweenShots = 1f;
 	[SerializeField] GameObject projectileToUse;
 	[SerializeField] GameObject projectileSocket;
+	[SerializeField] Vector3 aimOffset = new Vector3 (0, 1f, 0);
 
-	private float currentHealthPoints = 100f;
+	bool isAttacking = false;
+	private float currentHealthPoints;
 	AICharacterControl aICharacterControl = null;
 	GameObject player;
 
 	void Start()
 	{
+		currentHealthPoints = maxHealthPoints;
 		aICharacterControl = GetComponent<AICharacterControl>();
 		player = GameObject.FindGameObjectWithTag("Player");
 	}
@@ -25,11 +29,19 @@ public class Enemy : MonoBehaviour, IDamageable {
 	void Update()
 	{
 		float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-		if (distanceToPlayer <= attackRadius)
+		if (distanceToPlayer <= attackRadius && !isAttacking)
 		{
-			SpawnProjectile();
+			isAttacking = true;
+			InvokeRepeating("SpawnProjectile", 0f, secondsBetweenShots); //TODO switch to Coroutines
+
 		}
 
+		if (distanceToPlayer > attackRadius)
+		{
+			isAttacking = false;
+			CancelInvoke();
+		}
+		
 		if (distanceToPlayer <= chaseRadius)
 		{
 			aICharacterControl.SetTarget(player.transform);
@@ -52,6 +64,10 @@ public class Enemy : MonoBehaviour, IDamageable {
 	public void TakeDamage(float damage)
 	{
 		currentHealthPoints = Mathf.Clamp(currentHealthPoints - damage, 0f, maxHealthPoints);
+		if (currentHealthPoints <= 0)
+		{
+			DestroyObject(gameObject);
+		}
 
 	}
 
@@ -61,10 +77,9 @@ public class Enemy : MonoBehaviour, IDamageable {
 		newProjectile.name = "fireball";
 
 		Projectile projectileComponent = newProjectile.GetComponent<Projectile>();
-		projectileComponent.damageCaused = damagePerShot;
+		projectileComponent.SetDamage(damagePerShot);
 
-		Vector3 offsetPlayerCenter = new Vector3(0, 1, 0);
-		Vector3 playerCenterPosition = player.transform.position + offsetPlayerCenter;
+		Vector3 playerCenterPosition = player.transform.position + aimOffset;
 
 		Vector3 unitVectorToPlayer = (playerCenterPosition - projectileSocket.transform.position).normalized;
 		float projectileSpeed = projectileComponent.projectileSpeed;
@@ -78,7 +93,7 @@ public class Enemy : MonoBehaviour, IDamageable {
 		Gizmos.DrawWireSphere(transform.position, attackRadius);
 
 		//Draw move sphere
-		Gizmos.color = new Color(255f, 255f,255f,0.5f);
+		Gizmos.color = new Color(255f, 255f, 255f, 0.5f);
 		Gizmos.DrawWireSphere(transform.position, chaseRadius);
 	}
 
